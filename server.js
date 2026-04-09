@@ -243,6 +243,41 @@ app.get('/mcp', (req, res) => {
   });
 });
 
+// --- /info: MCP server info endpoint ---
+app.get('/info', (req, res) => {
+  res.json({
+    name: 'posts-api-mcp',
+    version: '1.0.0',
+    description: 'MCP server that exposes Posts & Comments API as tools',
+    capabilities: {
+      tools: true,
+      resources: true,
+      prompts: true
+    }
+  });
+});
+
+// --- Global error handler for 404 and other errors ---
+app.use((req, res) => {
+  res.status(404).json({
+    jsonrpc: '2.0',
+    error: { code: -32601, message: `Endpoint not found: ${req.method} ${req.path}` },
+    id: null
+  });
+});
+
+// --- Error handling middleware ---
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  if (!res.headersSent) {
+    res.status(500).json({
+      jsonrpc: '2.0',
+      error: { code: -32603, message: err.message || 'Internal server error' },
+      id: null
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`MCP server (streamable HTTP) listening on port ${PORT}, endpoint POST /mcp (no auth)`);
   console.log(`API base: ${API_BASE}`);

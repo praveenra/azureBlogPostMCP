@@ -177,9 +177,9 @@ function createMcpServer() {
   });
 
   // --- Prompt: run full post workflow (create national duty post → edit → view → delete) ---
-  server.registerPrompt('national-duty-post-workflow', {
-    title: 'National Duty Post: Create, Edit, View, Delete',
-    description: 'Runs all post tools in sequence: create a post on national duty, edit it, view it, then delete it.'
+  server.registerPrompt('raju-blog-post-workflow', {
+    title: 'Raju Blog Post: Create, Edit, View, Delete',
+    description: 'Runs all post tools in sequence: create a post on my blog page, edit it, view it, then delete it.'
   }, async () => {
     return {
       messages: [
